@@ -1,46 +1,27 @@
 package ru.netology.honeybadger;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Main {
     private static StringBuilder log = new StringBuilder();
     private static Date dateNow = new Date();
 
     public static void main(String[] args) {
-        File directoryGames = createdInstanceFileDirectory("G://", "Games");
-        createdDirectory(directoryGames);
-//1.В папке Games создайте несколько директорий: src, res, savegames, temp.
-        File directorySRC = createdInstanceFileDirectory(directoryGames.getAbsolutePath(), "src");
-        createdDirectory(directorySRC);
-        File directoryRES = createdInstanceFileDirectory(directoryGames.getAbsolutePath(), "res");
-        createdDirectory(directoryRES);
-        File directorySaveGames = createdInstanceFileDirectory(directoryGames.getAbsolutePath(), "savegames");
-        createdDirectory(directorySaveGames);
-        File directoryTEMP = createdInstanceFileDirectory(directoryGames.getAbsolutePath(), "temp");
-        createdDirectory(directoryTEMP);
-//2.В каталоге src создайте две директории: main, test.
-        File directoryMain = createdInstanceFileDirectory(directorySRC.getAbsolutePath(), "main");
-        createdDirectory(directoryMain);
-        File directoryTest = createdInstanceFileDirectory(directorySRC.getAbsolutePath(), "test");
-        createdDirectory(directoryTest);
-//3.В подкаталоге main создайте два файла: Main.java, Utils.java.
-        File fileMain = createdInstanceFileDirectory(directoryMain.getAbsolutePath(), "Main.java");
-        createdFile(fileMain);
-        File fileUtils = createdInstanceFileDirectory(directoryMain.getAbsolutePath(), "Utils.java");
-        createdFile(fileUtils);
-//4.В каталог res создайте три директории: drawables, vectors, icons.
-        File directoryDrawables = createdInstanceFileDirectory(directoryRES.getAbsolutePath(), "drawables");
-        createdDirectory(directoryDrawables);
-        File directoryVectors = createdInstanceFileDirectory(directoryRES.getAbsolutePath(), "vectors");
-        createdDirectory(directoryVectors);
-        File directoryIcons = createdInstanceFileDirectory(directoryRES.getAbsolutePath(), "icons");
-        createdDirectory(directoryIcons);
-//5.В директории temp создайте файл temp.txt.
-        File fileTemp = createdInstanceFileDirectory(directoryTEMP.getAbsolutePath(), "temp.txt");
+        List<String> arrayDirectories = Arrays.asList("G://Games", "G://Games/src", "G://Games/res", "G://Games/savegames", "G://Games/temp",
+                "G://Games/src/main", "G://Games/src/test", "G://Games/res/drawables", "G://Games/res/vectors", "G://Games/res/icons");
+        for (String directory : arrayDirectories) {
+            createdDirectory(createdInstanceFileDirectory(directory));
+        }
+        List<String> arrayFiles = Arrays.asList("G://Games/src/main/Main.java", "G://Games/src/main/Utils.java.");
+        for (String file : arrayFiles) {
+            createdFile(createdInstanceFileDirectory(file));
+        }
+        File fileTemp = createdInstanceFileDirectory("G://Games/temp/temp.txt");
         createdFile(fileTemp);
         try (FileWriter fileWriter = new FileWriter(fileTemp, false)) {
             fileWriter.write(log.toString());
@@ -51,8 +32,8 @@ public class Main {
         System.out.println(log);
     }
 
-    private static File createdInstanceFileDirectory(String pathName, String directoryName) {
-        File instanceFile = new File(pathName + "/" + directoryName);
+    private static File createdInstanceFileDirectory(String directoryName) {
+        File instanceFile = new File(directoryName);
         return instanceFile;
     }
 
@@ -99,6 +80,5 @@ public class Main {
             }
         }
     }
-
 }
 
